@@ -6,7 +6,6 @@ import CellWrap from '../ui/CellWrap';
 import { MODAL_TYPE } from '../../helpers/constants';
 import { formatDetailedDateTime } from '../../helpers/helpers';
 import { isValidAbsolutePath } from '../../helpers/form';
-import { LOCAL_STORAGE_KEYS, LocalStorageHelper } from '../../helpers/localStorageHelper';
 
 class Table extends Component {
     getDateCell = (row) => CellWrap(row, formatDetailedDateTime);
@@ -127,17 +126,12 @@ class Table extends Component {
             loading, filters, t, whitelist,
         } = this.props;
 
-        const localStorageKey = whitelist
-            ? LOCAL_STORAGE_KEYS.ALLOWLIST_PAGE_SIZE
-            : LOCAL_STORAGE_KEYS.BLOCKLIST_PAGE_SIZE;
-
         return (
             <ReactTable
                 data={filters}
                 columns={this.columns}
                 showPagination
-                defaultPageSize={LocalStorageHelper.getItem(localStorageKey) || 10}
-                onPageSizeChange={(size) => LocalStorageHelper.setItem(localStorageKey, size)}
+                defaultPageSize={10}
                 loading={loading}
                 minRows={6}
                 ofText="/"
