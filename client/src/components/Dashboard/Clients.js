@@ -13,6 +13,7 @@ import { BLOCK_ACTIONS, STATUS_COLORS } from '../../helpers/constants';
 import { toggleClientBlock } from '../../actions/access';
 import { renderFormattedClientCell } from '../../helpers/renderFormattedClientCell';
 import { getStats } from '../../actions/stats';
+import { LocalStorageHelper, LOCAL_STORAGE_KEYS } from '../../helpers/localStorageHelper';
 
 const getClientsPercentColor = (percent) => {
     if (percent > 50) {
@@ -135,7 +136,8 @@ const Clients = ({
                 showPagination={false}
                 noDataText={t('no_clients_found')}
                 minRows={6}
-                defaultPageSize={100}
+                defaultPageSize={LocalStorageHelper.getItem(LOCAL_STORAGE_KEYS.CLIENTS_PAGE_SIZE) || 100}
+                onPageSizeChange={(size) => LocalStorageHelper.setItem(LOCAL_STORAGE_KEYS.CLIENTS_PAGE_SIZE, size)}
                 className="-highlight card-table-overflow--limited clients__table"
                 getTrProps={(_state, rowInfo) => {
                     if (!rowInfo) {
